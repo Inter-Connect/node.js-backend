@@ -35,11 +35,10 @@ app.get('/', async ({ query }, response) => {
                     authorization: `${oauthData.token_type} ${oauthData.access_token}`,
                 },
             });
-
-            console.log(await userResult.json())
-        
             const user = await userResult.json();
+            console.log(user)
             avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+            console.log(avatar)
 		} catch (error) {
 			// NOTE: An unauthorized token will not throw an error;
 			// it will return a 401 Unauthorized response in the try block above
@@ -47,7 +46,7 @@ app.get('/', async ({ query }, response) => {
 		}
 	}
 
-	return response.render('index', {image: avatar});
+	return response.render('index', {avatar: avatar});
 });
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
