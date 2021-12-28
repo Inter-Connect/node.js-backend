@@ -8,6 +8,7 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 var avatar
+var user
 
 app.get('/', async ({ query }, response) => {
 	const { code } = query;
@@ -35,7 +36,7 @@ app.get('/', async ({ query }, response) => {
                     authorization: `${oauthData.token_type} ${oauthData.access_token}`,
                 },
             });
-            const user = await userResult.json();
+            user = await userResult.json();
             console.log(user)
             avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
             console.log(avatar)
@@ -46,7 +47,7 @@ app.get('/', async ({ query }, response) => {
 		}
 	}
 
-	return response.render('index', {avatar: avatar});
+	return response.render('index', {avatar: avatar, user: user});
 });
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
